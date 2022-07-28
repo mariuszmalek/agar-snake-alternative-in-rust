@@ -70,8 +70,6 @@ impl Game {
         self.snake.draw(&ctx, g);
         self.enemy.draw(&ctx, g);
 
-        // draw_text(&ctx, g, colors::SCORE, self.score.to_string());
-
         if self.over {
             draw_overlay(&ctx, g, colors::OVERLAY, self.size)
         }
@@ -90,6 +88,10 @@ impl Game {
         if self.waiting_time > fps_in_ms(FPS) && !self.over && !self.paused {
             // self.check_colision() use snake.get_head_pos;
             self.waiting_time = 0.0;
+
+            if !self.enemy.is_tail_overlapping() && !self.enemy.will_tail_overlapp() {
+                self.enemy.update(self.size.0, self.size.1);
+            }
 
             if !self.snake.is_tail_overlapping() && !self.snake.will_tail_overlapp() {
                 self.snake.update(self.size.0, self.size.1);
@@ -115,16 +117,21 @@ impl Game {
     }
 
     pub fn enemy_direction(&mut self) {
-        // TODO
-        // Random direciton of enemy
+
+        // let snake_position = self.snake.get_head_pos();
+        // let enemy_position = self.enemy.get_head_pos();
 
         // Key::A | Key::Left => self.snake.set_dir(Direction::Left),
         // Key::W | Key::Up => self.snake.set_dir(Direction::Up),
         // Key::D | Key::Right => self.snake.set_dir(Direction::Right),
+
         for elem in 0..100 {
-            if elem / 2 > 5 {
-                
-            }
+            // if elem / 2 > 5 {
+            //     self.enemy.set_dir(Direction::Left);
+            // }
+            // if elem / 6 > 5 {
+            //     self.enemy.set_dir(Direction::Right);
+            // }
             self.enemy.set_dir(Direction::Down);
         }
     }
