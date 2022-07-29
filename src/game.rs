@@ -101,7 +101,7 @@ impl Game {
                 self.snake.update(self.size.0, self.size.1);
 
                 // End game if have colision with window
-                if self.snake.get_head_pos().x == 0 || self.snake.get_head_pos().y == 0 {
+                if self.snake.get_head_pos().x == -1 || self.snake.get_head_pos().y == -1 {
                     self.over = true;
                 }
 
