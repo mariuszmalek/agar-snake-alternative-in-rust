@@ -118,22 +118,40 @@ impl Game {
 
     pub fn enemy_direction(&mut self) {
 
-        // let snake_position = self.snake.get_head_pos();
-        // let enemy_position = self.enemy.get_head_pos();
+        let snake_position = self.snake.get_head_pos();
+        let enemy_position = self.enemy.get_head_pos();
+
+
+        println!("enemy: {:?}, snake: {:?}", enemy_position, snake_position);
 
         // Key::A | Key::Left => self.snake.set_dir(Direction::Left),
         // Key::W | Key::Up => self.snake.set_dir(Direction::Up),
         // Key::D | Key::Right => self.snake.set_dir(Direction::Right),
 
-        for elem in 0..100 {
+        // for elem in 0..100 {
             // if elem / 2 > 5 {
             //     self.enemy.set_dir(Direction::Left);
             // }
             // if elem / 6 > 5 {
             //     self.enemy.set_dir(Direction::Right);
             // }
-            self.enemy.set_dir(Direction::Down);
-        }
+
+            if snake_position.x > enemy_position.x {
+                self.enemy.set_dir(Direction::Down);
+                self.enemy.set_dir(Direction::Right);
+            } else {
+                self.enemy.set_dir(Direction::Up);
+                self.enemy.set_dir(Direction::Left);
+            }
+
+            // if snake_position.y > enemy_position.y {
+            //     self.enemy.set_dir(Direction::Right);
+            // } else {
+            //     self.enemy.set_dir(Direction::Left);
+            // }
+
+            // self.enemy.set_dir(Direction::Down);
+        // }
     }
 
     pub fn key_down(&mut self, key: keyboard::Key) {
