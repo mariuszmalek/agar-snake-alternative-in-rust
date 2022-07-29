@@ -96,6 +96,7 @@ impl Game {
             if !self.snake.is_tail_overlapping() && !self.snake.will_tail_overlapp() {
                 self.snake.update(self.size.0, self.size.1);
 
+                // When user bite a fruit
                 if *self.snake.get_head_pos() == self.fruit {
                     self.snake.grow();
                     self.snake.update(self.size.0, self.size.1);
@@ -103,11 +104,18 @@ impl Game {
                     self.calc_score();
                 }
 
+                // When user bite a enemy
+                // if *self.snake.get_head_pos() == *self.enemy.get_head_pos() {
+                //     self.snake.grow();
+                //     self.snake.update(self.size.0, self.size.1);
+                //     self.enemy = Enemy::new(calc_random_pos(self.size.0, self.size.1));
+                //     self.calc_score();
+                // }
+
+                // When enemy bite a user
                 if *self.snake.get_head_pos() == *self.enemy.get_head_pos() {
-                    self.snake.grow();
-                    self.snake.update(self.size.0, self.size.1);
-                    self.enemy = Enemy::new(calc_random_pos(self.size.0, self.size.1));
-                    self.calc_score();
+                    self.enemy.grow();
+                    self.over = true;
                 }
 
             } else {
@@ -121,37 +129,26 @@ impl Game {
         let snake_position = self.snake.get_head_pos();
         let enemy_position = self.enemy.get_head_pos();
 
+        println!("enemy: {:?}, snake: {:?}", enemy_position.x, snake_position.x);
 
-        println!("enemy: {:?}, snake: {:?}", enemy_position, snake_position);
+        let x = snake_position.x > enemy_position.x;
+        let y = snake_position.y > enemy_position.y;
 
-        // Key::A | Key::Left => self.snake.set_dir(Direction::Left),
-        // Key::W | Key::Up => self.snake.set_dir(Direction::Up),
-        // Key::D | Key::Right => self.snake.set_dir(Direction::Right),
+        if x {
+            println!("Go to right");
+            self.enemy.set_dir(Direction::Right);
+        } else {
+            println!("Go to left");
+            self.enemy.set_dir(Direction::Left);
+        }
 
-        // for elem in 0..100 {
-            // if elem / 2 > 5 {
-            //     self.enemy.set_dir(Direction::Left);
-            // }
-            // if elem / 6 > 5 {
-            //     self.enemy.set_dir(Direction::Right);
-            // }
-
-            if snake_position.x > enemy_position.x {
-                self.enemy.set_dir(Direction::Down);
-                self.enemy.set_dir(Direction::Right);
-            } else {
-                self.enemy.set_dir(Direction::Up);
-                self.enemy.set_dir(Direction::Left);
-            }
-
-            // if snake_position.y > enemy_position.y {
-            //     self.enemy.set_dir(Direction::Right);
-            // } else {
-            //     self.enemy.set_dir(Direction::Left);
-            // }
-
-            // self.enemy.set_dir(Direction::Down);
-        // }
+        if y {
+            println!("Go to down");
+            self.enemy.set_dir(Direction::Down);
+        } else {
+            println!("Go to up");
+            self.enemy.set_dir(Direction::Up);
+        }
     }
 
     pub fn key_down(&mut self, key: keyboard::Key) {
