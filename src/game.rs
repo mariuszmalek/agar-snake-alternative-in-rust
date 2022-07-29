@@ -91,6 +91,8 @@ impl Game {
 
             if !self.enemy.is_tail_overlapping() && !self.enemy.will_tail_overlapp() {
                 self.enemy.update(self.size.0, self.size.1);
+            } else {
+                self.enemy = Enemy::new(calc_random_pos(self.size.0, self.size.1));
             }
 
             if !self.snake.is_tail_overlapping() && !self.snake.will_tail_overlapp() {
