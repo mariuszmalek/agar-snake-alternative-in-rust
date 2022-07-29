@@ -25,8 +25,8 @@ use game::Game;
 use piston_window::*;
 
 const WINDOW_TITLE: &'static str = "rsnake";
-const WIDTH: u32 = 25;
-const HEIGHT: u32 = 25;
+const WIDTH: u32 = 35;
+const HEIGHT: u32 = 35;
 
 fn main() {
     let size = [blocks_in_pixels(WIDTH), blocks_in_pixels(HEIGHT)];

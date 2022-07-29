@@ -67,6 +67,8 @@ impl Game {
 
     pub fn draw(&self, ctx: Context, g: &mut G2d) {
         draw_block(&ctx, g, colors::FRUIT, &self.fruit);
+        draw_block(&ctx, g, colors::FRUIT, &self.fruit);
+        draw_block(&ctx, g, colors::FRUIT, &self.fruit);
         self.snake.draw(&ctx, g);
         self.enemy.draw(&ctx, g);
 
@@ -97,6 +99,11 @@ impl Game {
 
             if !self.snake.is_tail_overlapping() && !self.snake.will_tail_overlapp() {
                 self.snake.update(self.size.0, self.size.1);
+
+                // End game if have colision with window
+                if self.snake.get_head_pos().x == 0 || self.snake.get_head_pos().y == 0 {
+                    self.over = true;
+                }
 
                 // When user bite a fruit
                 if *self.snake.get_head_pos() == self.fruit {
