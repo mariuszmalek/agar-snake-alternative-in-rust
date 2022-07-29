@@ -89,8 +89,6 @@ impl Game {
             // self.check_colision() use snake.get_head_pos;
             self.waiting_time = 0.0;
 
-            let snake_head_pos = *self.snake.get_head_pos();
-
             if !self.enemy.is_tail_overlapping() && !self.enemy.will_tail_overlapp() {
                 self.enemy.update(self.size.0, self.size.1);
             }
@@ -98,16 +96,14 @@ impl Game {
             if !self.snake.is_tail_overlapping() && !self.snake.will_tail_overlapp() {
                 self.snake.update(self.size.0, self.size.1);
 
-                if snake_head_pos == self.fruit {
+                if *self.snake.get_head_pos() == self.fruit {
                     self.snake.grow();
                     self.snake.update(self.size.0, self.size.1);
                     self.fruit = calc_random_pos(self.size.0, self.size.1);
                     self.calc_score();
                 }
 
-                // println!("hello there!, {}", snake_head_pos);
-
-                if snake_head_pos == *self.enemy.get_head_pos() {
+                if *self.snake.get_head_pos() == *self.enemy.get_head_pos() {
                     self.snake.grow();
                     self.snake.update(self.size.0, self.size.1);
                     self.enemy = Enemy::new(calc_random_pos(self.size.0, self.size.1));
