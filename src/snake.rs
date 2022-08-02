@@ -126,6 +126,16 @@ impl Snake {
         false
     }
 
+    pub fn get_next_position(&self) -> Position {
+        let next = self.next_head_pos();
+
+        return next;
+    }
+
+    pub fn get_body(&self) {
+        // return &self.tail.iter();
+    }
+
     pub fn grow(&mut self) {
         let last = match self.tail.back() {
             Some(pos) => pos.clone(),

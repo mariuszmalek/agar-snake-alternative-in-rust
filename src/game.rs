@@ -67,8 +67,7 @@ impl Game {
 
     pub fn draw(&self, ctx: Context, g: &mut G2d) {
         draw_block(&ctx, g, colors::FRUIT, &self.fruit);
-        draw_block(&ctx, g, colors::FRUIT, &self.fruit);
-        draw_block(&ctx, g, colors::FRUIT, &self.fruit);
+
         self.snake.draw(&ctx, g);
         self.enemy.draw(&ctx, g);
 
@@ -122,10 +121,20 @@ impl Game {
                 // }
 
                 // When enemy bite a user
-                if *self.snake.get_head_pos() == *self.enemy.get_head_pos() {
-                    self.enemy.grow();
-                    self.over = true;
-                }
+                // if *self.snake.get_head_pos() == *self.enemy.get_head_pos() {
+                //     self.enemy.grow();
+                //     self.over = true;
+                // }
+
+                // let snake_body = self.snake.get_body();
+                // for pos in snake_body {
+                //     // println!("{:?}", pos);
+                //     if pos == *self.enemy.get_head_pos() {
+                //         self.enemy.grow();
+                //         self.over = true;
+                //     }
+                // }
+
 
             } else {
                 self.over = true;
@@ -137,8 +146,12 @@ impl Game {
 
         let snake_position = self.snake.get_head_pos();
         let enemy_position = self.enemy.get_head_pos();
+        let snake_next_position = self.snake.get_next_position();
+        let body = self.snake.get_body();
 
-        println!("enemy: {:?}, snake: {:?}", enemy_position.x, snake_position.x);
+        println!("{:?}", body);
+        // println!("{:?}", snake_next_position);
+        // println!("enemy: {:?}, snake: {:?}", enemy_position.x, snake_position.x);
 
         let x = snake_position.x > enemy_position.x;
         let y = snake_position.y > enemy_position.y;
@@ -146,7 +159,9 @@ impl Game {
         if x {
             println!("Go to right");
             self.enemy.set_dir(Direction::Right);
-        } else {
+        }
+        
+        if !x {
             println!("Go to left");
             self.enemy.set_dir(Direction::Left);
         }
@@ -154,7 +169,9 @@ impl Game {
         if y {
             println!("Go to down");
             self.enemy.set_dir(Direction::Down);
-        } else {
+        }
+        
+        if !y {
             println!("Go to up");
             self.enemy.set_dir(Direction::Up);
         }
